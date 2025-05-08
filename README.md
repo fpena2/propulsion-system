@@ -46,7 +46,7 @@ cargo run
 - Start a `5 second` countdown 
 
 ```cmd
-curl -X POST http://localhost:8080/ \
+curl -X POST http://localhost:8124/ \
   -H "Content-Type: application/json" \
   -d '{"countdown": 5}' \
   -w "\nHTTP Status: %{http_code}\n"
@@ -55,7 +55,7 @@ curl -X POST http://localhost:8080/ \
 - Cancel current countdown
 
 ```cmd
-curl -X POST http://localhost:8080/ \
+curl -X POST http://localhost:8124/ \
   -H "Content-Type: application/json" \
   -d '{"countdown": -1}' \
   -w "\nHTTP Status: %{http_code}\n"
@@ -64,7 +64,7 @@ curl -X POST http://localhost:8080/ \
 - Invalid command 
 
 ```cmd
-curl -X POST http://localhost:8080/ \
+curl -X POST http://localhost:8124/ \
   -H "Content-Type: application/json" \
   -d '{"countdown": -5}' \
   -w "\nHTTP Status: %{http_code}\n"
