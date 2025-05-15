@@ -1,22 +1,19 @@
 use actix_web::{App, HttpServer, web};
 use tokio::sync::watch;
-use tracing::error;
 
 mod routes;
 mod system;
-
-use system::{CountdownState, MissionComputer};
+use system::{CountdownCommand, MissionComputer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     tracing_subscriber::fmt::init();
-    let (tx, rx) = watch::channel(CountdownState::Cancel);
+
+    let (tx, rx) = watch::channel(CountdownCommand::Cancel);
 
     // Spawn task just for the mission computer
     tokio::spawn(async move {
-        if let Err(e) = MissionComputer::new(rx).run().await {
-            error!("Mission computer failed: {}", e);
-        }
+        MissionComputer::new(rx).run().await;
     });
 
     // Server to listen and send inputs to mission computer
